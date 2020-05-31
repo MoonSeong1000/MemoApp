@@ -1,11 +1,9 @@
 package com.example.memoapp.db.dao
 
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.memoapp.db.entity.Memo
 
+@Dao
 interface MemoDao {
     @Query("SELECT * FROM memo")
     fun getMemos(): List<Memo>
