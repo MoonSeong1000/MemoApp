@@ -1,6 +1,7 @@
 package com.example.memoapp.db.local
 
 import com.example.memoapp.db.entity.Category
+import com.example.memoapp.db.source.local.CategoryLocalDataSource
 import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Assert

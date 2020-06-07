@@ -1,6 +1,5 @@
-package com.example.memoapp.db.local
+package com.example.memoapp.db.source.local
 
-import com.example.memoapp.db.CategoryDataSource
 import com.example.memoapp.db.dao.CategoryDao
 import com.example.memoapp.db.entity.Category
 import com.example.memoapp.util.AsyncExecutor
@@ -49,7 +48,11 @@ class CategoryLocalDataSource private constructor(
             asyncExecutor: AsyncExecutor,
             categoryDao: CategoryDao
         ): CategoryLocalDataSource = INSTANCE
-            ?: CategoryLocalDataSource(asyncExecutor, categoryDao).apply { INSTANCE = this }
+            ?: CategoryLocalDataSource(
+                asyncExecutor,
+                categoryDao
+            )
+                .apply { INSTANCE = this }
     }
 
 }

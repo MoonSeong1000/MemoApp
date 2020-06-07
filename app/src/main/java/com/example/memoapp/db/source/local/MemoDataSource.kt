@@ -1,4 +1,4 @@
-package com.example.memoapp.db
+package com.example.memoapp.db.source.local
 
 import com.example.memoapp.db.entity.Category
 import com.example.memoapp.db.entity.Memo

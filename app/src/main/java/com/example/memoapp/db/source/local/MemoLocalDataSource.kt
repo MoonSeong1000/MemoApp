@@ -1,10 +1,10 @@
-package com.example.memoapp.db.local
+package com.example.memoapp.db.source.local
 
-import com.example.memoapp.db.MemoDataSource
 import com.example.memoapp.db.dao.MemoDao
 import com.example.memoapp.db.entity.Memo
 
-class MemoLocalDataSource private constructor(private val memoDao: MemoDao) : MemoDataSource {
+class MemoLocalDataSource private constructor(private val memoDao: MemoDao) :
+    MemoDataSource {
     override fun getMemos(callback: (memo: List<Memo>) -> Unit) {
         TODO("Not yet implemented")
     }
@@ -31,6 +31,7 @@ class MemoLocalDataSource private constructor(private val memoDao: MemoDao) : Me
         @JvmStatic
         @Synchronized
         fun getInstance(memoDao: MemoDao): MemoLocalDataSource = INSTANCE
-            ?: MemoLocalDataSource(memoDao).apply { INSTANCE = this }
+            ?: MemoLocalDataSource(memoDao)
+                .apply { INSTANCE = this }
     }
 }
