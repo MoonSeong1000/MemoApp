@@ -2,9 +2,17 @@ package com.example.memoapp.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    foreignKeys = [ForeignKey(
+        entity = Memo::class,
+        parentColumns = ["memo_id"],
+        childColumns = ["memo_id"],
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 class Image (
     @PrimaryKey
     @ColumnInfo(name ="image_id")
@@ -14,7 +22,7 @@ class Image (
     val ofMemoId:String,
 
     @ColumnInfo(name = "byte_code", typeAffinity = ColumnInfo.BLOB)
-    val byteCode: ByteArray
+    var byteCode: ByteArray
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -37,9 +37,9 @@ data class Memo(
     var imageCount: Int = 0
 
     @Ignore
-    val images: MutableList<Bitmap> = ArrayList()
+    val images: MutableList<Image> = ArrayList()
 
-    fun loadImages(images: List<Bitmap>) {
+    fun loadImages(images: List<Image>) {
         this.images.addAll(images)
     }
 

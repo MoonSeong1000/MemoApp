@@ -10,4 +10,4 @@ fun Bitmap.toByteArray(): ByteArray {
     val blob = ByteArrayOutputStream()
     this.compress(Bitmap.CompressFormat.PNG, 0, blob)
     return blob.toByteArray()
-} 
+}
