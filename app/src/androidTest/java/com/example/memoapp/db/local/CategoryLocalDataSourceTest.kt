@@ -3,13 +3,14 @@ package com.example.memoapp.db.local
 import com.example.memoapp.db.entity.Category
 import junit.framework.Assert.assertEquals
 import org.junit.After
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import java.util.concurrent.CountDownLatch
-
 class CategoryLocalDataSourceTest : KoinTest {
+
     private val localDataSource: CategoryLocalDataSource by inject()
     private var insertedCategoryId = ""
 
@@ -27,19 +28,18 @@ class CategoryLocalDataSourceTest : KoinTest {
 
     @Test(timeout = 2000)
     fun saveCategory_retrievesCategory() {
-        val newCategory = Category(name="Test")
-        var retrievesCategory : Category? = null
-        localDataSource.saveCategory(newCategory)
+        val newCategory = Category(name = "Test")
+        var retrievedCategory: Category? = null
 
+        localDataSource.saveCategory(newCategory)
         insertedCategoryId = newCategory.id
 
         localDataSource.getCategory(newCategory.id) {
-            retrievesCategory = it
+            retrievedCategory = it
             countDownLatch.countDown()
         }
-
         countDownLatch.await()
-        assertEquals(retrievesCategory,newCategory)
+        assertEquals(retrievedCategory, newCategory)
     }
 
     @Test(timeout = 2000)
@@ -61,5 +61,23 @@ class CategoryLocalDataSourceTest : KoinTest {
         }
         countDownLatch.await()
         assertEquals(modifiedCategory, retrievedCategory)
+    }
+
+    @Test(timeout = 2000)
+    fun delete() {
+        val newCategory = Category(name="Test")
+        var deletedCategory: Category? = Category(name = "NotDeleted")
+
+        localDataSource.saveCategory(newCategory)
+        insertedCategoryId = newCategory.id
+
+        localDataSource.deleteCategory(newCategory.id)
+        localDataSource.getCategory(newCategory.id) {
+            deletedCategory = it
+            countDownLatch.countDown()
+        }
+
+        countDownLatch.await()
+        Assert.assertNull(deletedCategory)
     }
 }
