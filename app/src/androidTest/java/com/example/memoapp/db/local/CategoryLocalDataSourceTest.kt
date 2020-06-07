@@ -64,7 +64,7 @@ class CategoryLocalDataSourceTest : KoinTest {
     }
 
     @Test(timeout = 2000)
-    fun delete() {
+    fun verifyDeleteCategory() {
         val newCategory = Category(name="Test")
         var deletedCategory: Category? = Category(name = "NotDeleted")
 
