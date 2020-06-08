@@ -6,14 +6,21 @@ import com.example.memoapp.db.entity.Memo
 
 @Dao
 abstract class MemoDao {
+
     @Query("SELECT * FROM memo")
     abstract fun getMemos(): List<Memo>
 
     @Query("SELECT * FROM memo WHERE memo_id = :memoId")
     abstract fun getMemoById(memoId: String): Memo?
 
+    @Query("SELECT * FROM image WHERE memo_id = :memoId")
+    abstract fun getImagesByMemoId(memoId: String): List<Image>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertMemo(memo: Memo)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertImage(images: List<Image>)
 
     @Update
     abstract fun updateMemo(memo: Memo)
@@ -21,21 +28,20 @@ abstract class MemoDao {
     @Query("DELETE FROM memo WHERE memo_id = :memoId")
     abstract fun deleteMemoById(memoId: String)
 
-    @Query("SELECT * FROM image WHERE memo_id = :memoId")
-    abstract fun getImagesByMemoId(memoId:String):List<Image>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertImage(images: List<Image>)
+    @Delete
+    abstract fun deleteImages(images: List<Image>)
 
     @Transaction
-    open fun saveMemo(memo:Memo) {
+    open fun saveMemo(memo: Memo) {
         insertMemo(memo)
         insertImage(memo.images)
     }
 
     @Transaction
-    open fun modifyMemo(memo: Memo) {
+    open fun modifyMemo(memo: Memo, deletedImages: List<Image>) {
         updateMemo(memo)
         insertImage(memo.images)
+        deleteImages(deletedImages)
     }
+
 }
