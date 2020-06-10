@@ -2,6 +2,8 @@ package com.example.memoapp.config.di
 
 import androidx.room.Room
 import com.example.memoapp.db.AppDatabase
+import com.example.memoapp.db.CategoryRepository
+import com.example.memoapp.db.MemoRepository
 import com.example.memoapp.db.source.local.CategoryLocalDataSource
 import com.example.memoapp.db.source.local.MemoLocalDataSource
 import com.example.memoapp.util.AsyncExecutor
@@ -28,8 +30,14 @@ val localDataSourceModule = module {
     }
 }
 
+val repositoryModule = module {
+    single { CategoryRepository(get())}
+    single {MemoRepository(get()}
+}
+
 val diModules = listOf(
     asyncExecutorModule,
     appDataBaseModule,
-    localDataSourceModule
+    localDataSourceModule,
+    repositoryModule
 )

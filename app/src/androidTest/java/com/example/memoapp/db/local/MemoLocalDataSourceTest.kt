@@ -107,4 +107,5 @@ class MemoLocalDataSourceTest : KoinTest {
         assertEquals(newMemo, retrievedMemo)
         assertEquals(newMemo.images, retrievedMemo?.images)
     }
+
 }
