@@ -1,6 +1,6 @@
 package com.example.memoapp.db.entity
 
-import android.graphics.Bitmap
+import androidx.annotation.VisibleForTesting
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -37,29 +37,38 @@ data class Memo(
     var imageCount: Int = 0
 
     @Ignore
-    val images: MutableList<Image> = ArrayList()
+    private val _images: MutableList<Image> = ArrayList()
+
+    fun getImages():List<Image> {
+        return _images
+    }
 
     fun loadImages(images: List<Image>) {
-        this.images.addAll(images)
+        this._images.addAll(images)
     }
 
     fun addImage(image: Image) {
-        if (images.isEmpty()) thumbnailByteCode = image.byteCode.copyOf()
-        this.images.add(image)
+        if (_images.isEmpty()) thumbnailByteCode = image.byteCode.copyOf()
+        this._images.add(image)
         imageCount++
     }
 
     fun addImages(images: List<Image>) {
-        if (this.images.isEmpty()) thumbnailByteCode = images[0].byteCode.copyOf()
-        this.images.addAll(images)
+        if (this._images.isEmpty()) thumbnailByteCode = images[0].byteCode.copyOf()
+        this._images.addAll(images)
         imageCount += images.size
     }
 
     fun removeImageAt(index: Int): Image {
-        val removedImage = images.removeAt(index)
-        thumbnailByteCode = if (images.size < 1) null else images[0].byteCode.copyOf()
+        val removedImage = _images.removeAt(index)
+        thumbnailByteCode = if (_images.size < 1) null else _images[0].byteCode.copyOf()
         imageCount--
         return removedImage
+    }
+
+    @VisibleForTesting
+    fun clearOnlyImageMutableList() {
+        _images.clear()
     }
 
 

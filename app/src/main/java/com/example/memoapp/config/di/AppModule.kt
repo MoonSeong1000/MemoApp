@@ -32,7 +32,7 @@ val localDataSourceModule = module {
 
 val repositoryModule = module {
     single { CategoryRepository(get())}
-    single {MemoRepository(get()}
+    single {MemoRepository(get())}
 }
 
 val diModules = listOf(

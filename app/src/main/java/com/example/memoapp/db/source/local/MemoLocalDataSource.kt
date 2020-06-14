@@ -11,7 +11,7 @@ class MemoLocalDataSource private constructor(
 ) : MemoDataSource {
     override fun getMemos(callback: (memo: List<Memo>) -> Unit) {
         asyncExecutor.ioThread.execute{
-            val memos = memoDao.getMemos()
+            val memos = memoDao.getMemosNoImages()
             asyncExecutor.mainThread.execute{callback(memos)}
         }
     }
@@ -19,7 +19,7 @@ class MemoLocalDataSource private constructor(
     override fun getMemo(memoId: String, callback: (memo: Memo?) -> Unit) {
         asyncExecutor.ioThread.execute{
             val imagesOfMemo = memoDao.getImagesByMemoId(memoId)
-            val memo = memoDao.getMemoById(memoId)
+            val memo = memoDao.getMemoNoImagesById(memoId)
             memo?.loadImages(imagesOfMemo)
             asyncExecutor.mainThread.execute{callback(memo)}
         }

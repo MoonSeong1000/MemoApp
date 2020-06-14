@@ -1,7 +1,6 @@
 package com.example.memoapp.db.local
 
 import android.graphics.Bitmap
-import android.graphics.Bitmap.createBitmap
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.request.transition.Transition
 import androidx.annotation.DrawableRes
@@ -14,7 +13,6 @@ import com.example.memoapp.db.entity.Memo
 import com.example.memoapp.db.source.local.MemoLocalDataSource
 import com.example.memoapp.util.toByteArray
 import junit.framework.Assert.assertEquals
-import kotlinx.android.synthetic.main.fragment_first.view.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -105,7 +103,7 @@ class MemoLocalDataSourceTest : KoinTest {
 
         countDownLatch.await()
         assertEquals(newMemo, retrievedMemo)
-        assertEquals(newMemo.images, retrievedMemo?.images)
+        assertEquals(newMemo._images, retrievedMemo?._images)
     }
 
 }
